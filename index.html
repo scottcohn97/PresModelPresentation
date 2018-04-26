@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Effect of Economic Events on Votes for the President</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Scott Cohn and Samuel Hostetter" />
+    <meta name="date" content="2018-04-25" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
+    <script src="libs/jquery-1.11.1/jquery.min.js"></script>
+    <link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+    <script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+    <script src="libs/moment-2.8.4/moment.js"></script>
+    <script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+    <script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+    <script src="libs/dygraphs-binding-1.1.1.4/dygraphs.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# The Effect of Economic Events on Votes for the President
+## Resource Economics 312
+### Scott Cohn and Samuel Hostetter
+### April 25, 2018
+
+---
+
+
+class: incremental
+# Literature Review
+
+- Anthony Downs
+  + Establishes a disconnect between voter desires and government desire
+  
+- Gerald H. Kramer
+  + Focused on votes for the House of Representatives and Congress
+  + Argued effect of presidential elections is much more influenced by non-economic events
+  
+- George J. Stigler
+  + Believes voters think about many confounding factors when they vote
+  + Voters are "self-interested and well-informed"
+
+---
+class: middle, center
+
+# The Model 
+
+`$$V_t = \alpha_1 + \alpha_2 G_t * I_t + \alpha_3 P_t * I_t + \alpha_4 Z_t * I_t + \alpha_5 {DPER_t} + \alpha_6 {DUR_t} +\alpha_7 I_t + \alpha_8 {WAR_t} + \mu_t$$`
+---
+
+&lt;table class="table table-striped table-condensed" style="font-size: 17px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Variable &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Definition &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; VP &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Democratic Share of the Two-Party Presidential Vote &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; actualVP &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Actual Democratic Result of Predicted Election &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; I &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 if there is a Democratic presidential Incumbent at the time of the election and -1 if there is a Republican Presidential Incumbent. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; DPER &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 if a Democratic Presidential incumbent is running again, -1 if a Republican  presidential incumbent is running again, and 0 otherwise. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; DUR &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 if either party has been in the White House for one term, 1 [-1] if the Democratic [Republican] party has been in the White House for two consecutive terms, 1.25 [-1.25] if the Democratic [Republican] party has been in the White House for three consecutive terms, 1.50 [-1.50] if the Democratic [Republican] party has been in the White House for four consecutive terms, and so on. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; WAR &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 for the elections of 1944 and 1948, and 0 otherwise. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; P &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Absolute value of the growth rate of the GDP deflator in the first 15 quarters of the administration (annual rate). &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; G &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Growth rate of real per capita GDP in the first three quarters of the midterm election year (annual rate) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Z &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Number of quarters in the first 15 quarters of the administration in which the growth rate of real per capita GDP is greater than 3.2% at an annual rate except for 1944 and 1948, where the values are zero. &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+---
+# Ray Fair
+
+- Probably wrote own of your textbooks (Case, Fair, Oster)
+
+- Derived first model in Fair (1978)
+
+- Not much changed until 1992
+
+---
+class:middle
+
+- How do economic events affect the voting behavior?
+
+- Two purposes
+  + Present general model to incorporate theory of the time
+  + Model should allow testing of these theories against each other
+
+---
+
+<div id="htmlwidget-2f4413035efcd55122fa" style="width:750px;height:504px;" class="dygraphs html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2f4413035efcd55122fa">{"x":{"attrs":{"axes":{"x":{"pixelsPerLabel":60,"drawAxis":true,"drawGrid":false},"y":{"drawAxis":true}},"series":{"Prediction":{"axis":"y"},"Actual Vote":{"axis":"y"}},"title":"Model Prediction vs Actual Outcome","xlabel":"Year","ylabel":"Vote Percentage","labels":["Year","Error","Prediction","Actual Vote"],"retainDateWindow":false,"stackedGraph":false,"fillGraph":false,"fillAlpha":0.15,"stepPlot":false,"drawPoints":false,"pointSize":1,"drawGapEdgePoints":false,"connectSeparatedPoints":false,"strokeWidth":1,"strokeBorderColor":"white","colorValue":0.5,"colorSaturation":1,"includeZero":false,"drawAxesAtZero":false,"logscale":false,"axisTickSize":3,"axisLineColor":"black","axisLineWidth":0.3,"axisLabelColor":"black","axisLabelFontSize":14,"axisLabelWidth":60,"drawGrid":true,"gridLineWidth":0.3,"rightGap":5,"digitsAfterDecimal":2,"labelsKMB":false,"labelsKMG2":false,"labelsUTC":false,"maxNumberWidth":6,"animatedZooms":false,"mobileDisableYTouch":true,"showRangeSelector":true,"rangeSelectorHeight":10,"rangeSelectorPlotFillColor":" #A7B1C4","rangeSelectorPlotStrokeColor":"#808FAB","interactionModel":"Dygraph.Interaction.defaultModel","legend":"auto","labelsDivWidth":500,"labelsShowZeroValues":true,"labelsSeparateLines":false,"hideOverlayOnMouseOut":true},"annotations":[],"shadings":[],"events":[{"pos":"1964","label":"LBJ","labelLoc":"bottom","color":"black","strokePattern":[7,3],"axis":"x"},{"pos":"1992","label":"Ross Perot","labelLoc":"bottom","color":"black","strokePattern":[7,3],"axis":"x"}],"format":"numeric","data":[[1940,1944,1948,1952,1956,1960,1964,1968,1972,1976,1980,1984,1988,1992,1996,2000,2004,2008,2012,2016],[0.282999999999994,0.378,2.719,0.310000000000002,0.905999999999999,0.387,0.103000000000002,7.025,1.009,1.049,3.842,0.277000000000001,0.467999999999996,10.621,5.537,1.862,0.467000000000006,0.789000000000001,0.909999999999997,0.799999999999997],[54.983,53.778,52.319,44.71,42.906,50.087,61.203,49.425,38.209,51.049,44.842,40.877,46.168,53.621,54.737,50.262,48.767,53.689,52.01,49],[54.7,53.4,49.6,44.4,42,49.7,61.1,42.4,37.2,50,41,40.6,45.7,43,49.2,48.4,48.3,52.9,51.1,48.2]],"fixedtz":false,"tzone":""},"evals":["attrs.interactionModel"],"jsHooks":[]}</script>
+
+---
+class:middle, center
+
+`\(V_t = \alpha_1 + \alpha_2 G_t + \alpha_3 P_t + \alpha_4 Z_t + \alpha_5 {DPER_t} + \alpha_6 {DUR_t} +\alpha_7 I_t + \alpha_8 {WAR_t} + \mu_t\)`
+
+---
+
+&lt;table style="border-collapse:collapse; border:none;border-bottom:double;"&gt;
+&lt;td style="padding:0.2cm; border-top:double;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="border-bottom:1px solid; padding-left:0.5em; padding-right:0.5em; border-top:double;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; border-bottom:1px solid; border-top:double;" colspan="3"&gt;actualVP&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; font-style:italic;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em; font-style:italic;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; font-style:italic; "&gt;B&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; font-style:italic; "&gt;std. Error&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; font-style:italic; "&gt;p&lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; border-top:1px solid; text-align:left;"&gt;(Intercept)&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em; border-top:1px solid; "&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; border-top:1px solid; "&gt;0.49&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; border-top:1px solid; "&gt;0.03&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; border-top:1px solid; "&gt;&amp;lt;.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;I&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;&amp;#45;0.03&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.03&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.457&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;DPER&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.07&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.03&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.059&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;DUR&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;&amp;#45;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.03&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.641&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;WAR&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;&amp;#45;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.06&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.939&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;G&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.00&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.00&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.624&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;P&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;&amp;#45;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.016&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;Z&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.00&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.497&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;"&gt;Observations&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em; border-top:1px solid;"&gt;&amp;nbsp;&lt;/td&gt;&lt;td style="padding:0.2cm; padding-top:0.1cm; padding-bottom:0.1cm; text-align:center; border-top:1px solid;" colspan="3"&gt;19&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / adj. R&lt;sup&gt;2&lt;/sup&gt;&lt;/td&gt;
+
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;&lt;td style="padding:0.2cm; text-align:center; padding-top:0.1cm; padding-bottom:0.1cm;" colspan="3"&gt;.709 / .524&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td style="padding:0.2cm; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;F&amp;#45;statistics&lt;/td&gt;
+
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt; &lt;td style="padding:0.2cm; text-align:center; padding-top:0.1cm; padding-bottom:0.1cm;" colspan="3"&gt;3.827*&lt;/td&gt;
+ &lt;/tr&gt;
+&lt;/table&gt;
+
+---
+class: middle, center
+
+`\(V_t = \alpha_1 + \alpha_2 G_t * I_t + \alpha_3 P_t * I_t + \alpha_4 Z_t * I_t + \alpha_5 {DPER_t} + \alpha_6 {DUR_t} +\alpha_7 I_t + \alpha_8 {WAR_t} + \mu_t\)`
+
+---
+
+&lt;table style="border-collapse:collapse; border:none;border-bottom:double;"&gt;
+&lt;td style="padding:0.2cm; border-top:double;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="border-bottom:1px solid; padding-left:0.5em; padding-right:0.5em; border-top:double;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; border-bottom:1px solid; border-top:double;" colspan="3"&gt;actualVP&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; font-style:italic;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em; font-style:italic;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; font-style:italic; "&gt;B&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; font-style:italic; "&gt;std. Error&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; font-style:italic; "&gt;p&lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; border-top:1px solid; text-align:left;"&gt;(Intercept)&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em; border-top:1px solid; "&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; border-top:1px solid; "&gt;0.49&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; border-top:1px solid; "&gt;0.03&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; border-top:1px solid; "&gt;&amp;lt;.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;I&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;&amp;#45;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.05&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.858&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;DPER&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.05&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.03&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.155&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;DUR&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;&amp;#45;0.03&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.03&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.333&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;WAR&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.04&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.06&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.514&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;G&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;&amp;#45;0.00&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.416&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;P&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;&amp;#45;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.193&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;Z&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.00&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.680&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;I:G&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.00&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.744&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;I:P&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;&amp;#45;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.091&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;I:Z&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.00&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.099&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;"&gt;Observations&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em; border-top:1px solid;"&gt;&amp;nbsp;&lt;/td&gt;&lt;td style="padding:0.2cm; padding-top:0.1cm; padding-bottom:0.1cm; text-align:center; border-top:1px solid;" colspan="3"&gt;19&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / adj. R&lt;sup&gt;2&lt;/sup&gt;&lt;/td&gt;
+
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;&lt;td style="padding:0.2cm; text-align:center; padding-top:0.1cm; padding-bottom:0.1cm;" colspan="3"&gt;.853 / .670&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td style="padding:0.2cm; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;F&amp;#45;statistics&lt;/td&gt;
+
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt; &lt;td style="padding:0.2cm; text-align:center; padding-top:0.1cm; padding-bottom:0.1cm;" colspan="3"&gt;4.652*&lt;/td&gt;
+ &lt;/tr&gt;
+&lt;/table&gt;
+
+---
+class: middle, center
+
+`\(V_t = \alpha_1 + \alpha_2 G_t * I_t + \alpha_3 P_t * I_t + \alpha_4 Z_t * I_t + \alpha_5 {DPER_t} + \alpha_6 {DUR_t} +\alpha_7 I_t + \alpha_8 {WAR_t} + \mu_t\)`
+
+---
+
+&lt;table style="border-collapse:collapse; border:none;border-bottom:double;"&gt;
+&lt;td style="padding:0.2cm; border-top:double;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="border-bottom:1px solid; padding-left:0.5em; padding-right:0.5em; border-top:double;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; border-bottom:1px solid; border-top:double;" colspan="3"&gt;actualVP&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; font-style:italic;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em; font-style:italic;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; font-style:italic; "&gt;B&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; font-style:italic; "&gt;std. Error&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; font-style:italic; "&gt;p&lt;/td&gt; 
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; border-top:1px solid; text-align:left;"&gt;(Intercept)&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em; border-top:1px solid; "&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; border-top:1px solid; "&gt;0.46&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; border-top:1px solid; "&gt;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; border-top:1px solid; "&gt;&amp;lt;.001&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;I&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;&amp;#45;0.04&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.04&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.318&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;DPER&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.06&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.03&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.044&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;DUR&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;&amp;#45;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.02&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.568&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;WAR&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.03&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.05&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.571&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;G&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.00&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.049&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;P&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;&amp;#45;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.00&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.046&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left;"&gt;Z&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.01&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;0.00&lt;/td&gt;
+&lt;td style="padding:0.2cm; text-align:center; "&gt;.097&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;"&gt;Observations&lt;/td&gt;
+&lt;td style="padding-left:0.5em; padding-right:0.5em; border-top:1px solid;"&gt;&amp;nbsp;&lt;/td&gt;&lt;td style="padding:0.2cm; padding-top:0.1cm; padding-bottom:0.1cm; text-align:center; border-top:1px solid;" colspan="3"&gt;19&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding:0.2cm; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;R&lt;sup&gt;2&lt;/sup&gt; / adj. R&lt;sup&gt;2&lt;/sup&gt;&lt;/td&gt;
+
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt;&lt;td style="padding:0.2cm; text-align:center; padding-top:0.1cm; padding-bottom:0.1cm;" colspan="3"&gt;.809 / .687&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td style="padding:0.2cm; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;"&gt;F&amp;#45;statistics&lt;/td&gt;
+
+&lt;td style="padding-left:0.5em; padding-right:0.5em;"&gt;&amp;nbsp;&lt;/td&gt; &lt;td style="padding:0.2cm; text-align:center; padding-top:0.1cm; padding-bottom:0.1cm;" colspan="3"&gt;6.654**&lt;/td&gt;
+ &lt;/tr&gt;
+&lt;/table&gt;
+
+---
+# Multicollinearity
+
+`$$VIF_k = \frac{1}{1 - R^2_k}$$`
+
+![](VIF_Table.png)&lt;!-- --&gt;
+---
+# Heteroskedasticity
+
+`$$\chi^2 = n\times R^2 \sim \chi^2_{(N-1)}$$`
+![](Heterosk_Table.png)&lt;!-- --&gt;
+---
+# Autocorrelation
+
+`$$d = \frac{\sum_{t=2}^{T}(e_t-e_{t-1})^2}{\sum_{t=1}^{T}e^2_t}$$`
+![](Autocorr_Table.png)&lt;!-- --&gt;
+---
+# Forecasts
+
+![](2016_Forecast.png)&lt;!-- --&gt;![](2020_Forecase.png)&lt;!-- --&gt;
+---
+class: center, middle
+
+# What's Next?
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"incremental": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
