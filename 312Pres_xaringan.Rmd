@@ -1,0 +1,289 @@
+---
+title: "The Effect of Economic Events on Votes for the President"
+subtitle: "Resource Economics 312"
+author: "Scott Cohn and Samuel Hostetter"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      incremental: true
+
+      
+---
+```{r setup, include=FALSE, cache=TRUE}
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
+
+# Libraries
+library(rlang)
+library(readxl)
+library(dplyr)
+library(randomForest)
+library(car)
+library(ggplot2)
+library(ggthemes)
+library(sjPlot)
+library(forecast)
+library(xtable)
+library(broom)
+library(knitr)
+library(lmtest)
+library(het.test)
+library(plotly)
+library(ggfortify)
+library(party)
+library(dynlm)
+library(stargazer)
+library(kableExtra)
+library(knitrBootstrap)
+library(readr)
+library(magick)
+library(dygraphs)
+library(magrittr) 
+
+
+# Import
+
+ModelData <- read_excel("data.xlsx")
+D_Outcome <- read_excel("data.xlsx", sheet = "Actual Value")
+FairVersusActual <- readxl::read_excel("data.xlsx", sheet = "Fair_Versus_Actual_Pres")
+
+# Trim and Clean
+WorkSet <- ModelData[11:35, 1:10]
+#WorkSet <- WorkSet[, -WorkSet$rfpred]
+names(WorkSet)[names(WorkSet) == 't'] <- 'Year'
+
+
+dplyr::inner_join(WorkSet, D_Outcome, by = "Year")
+
+WorkSet <-
+  data.frame(lapply(WorkSet, function(x)
+    as.numeric(as.character(x))))
+
+# Convert VP and actualVP to percentages
+WorkSet$VP <- (WorkSet$VP / 100)
+WorkSet$actualVP <- (WorkSet$actualVP / 100)
+
+# Define WorkSet
+explore_data <- WorkSet[ ,c("Year", "actualVP", "I", "DPER", "DUR", "WAR", "G", "P", "Z")]
+
+# Models
+full_model <- lm(actualVP ~ I + DPER + DUR + WAR + G + P + Z, data = explore_data)
+interaction_model <- lm(actualVP ~ I + DPER + DUR + WAR + G*I + P*I + Z*I , data = explore_data)
+model_Fair <- lm(actualVP ~ I + DPER + DUR + WAR + G:I + P:I + Z:I , data = explore_data)
+Fair_NoWar <- lm(actualVP ~ I + DPER + DUR + G:I + P:I + Z:I , data = explore_data)
+```
+class: incremental
+# Literature Review
+
+- Anthony Downs
+  + Establishes a disconnect between voter desires and government desire
+  
+- Gerald H. Kramer
+  + Focused on votes for the House of Representatives and Congress
+  + Argued effect of presidential elections is much more influenced by non-economic events
+  
+- George J. Stigler
+  + Believes voters think about many confounding factors when they vote
+  + Voters are "self-interested and well-informed"
+
+---
+# Ray Fair
+
+- Probably wrote own of your textbooks (Case, Fair, Oster)
+
+- Derived first model in Fair (1978)
+
+- Not much changed until 1992
+
+- Multiple regression
+
+- Time series data
+
+---
+class: middle, center
+
+# Ray Fair Model 
+
+$$V_t = \alpha_1 + \alpha_2 G_t * I_t + \alpha_3 P_t * I_t + \alpha_4 Z_t * I_t + \alpha_5 {DPER_t} + \alpha_6 {DUR_t} +\alpha_7 I_t + \alpha_8 {WAR_t} + \mu_t$$
+---
+
+```{r VarTable, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+VarDef <- read_excel("data.xlsx", sheet = "VarDef")
+kable(VarDef,
+      format = "html",
+      #table.attr = "style = 'width:90%;'",
+      booktabs = T
+      ) %>%
+  #column_spec(2, width = "40em") %>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "condensed", position = "center"), font_size = 17)# %>%
+ # kable_as_image("vardef_table")
+
+```
+
+---
+class:middle
+
+- How do economic events affect the voting behavior?
+
+- Two purposes
+  + Present general model to incorporate theory of the time
+  + Model should allow testing of these theories against each other
+
+---
+
+```{r FairModel, echo=FALSE, message=FALSE, warning=FALSE}
+library(magrittr)
+dygraphs::dygraph(FairVersusActual,
+        main = "Model Prediction vs Actual Outcome",
+        ylab = "Vote Percentage",
+        xlab = "Year",
+        width = 750) %>% 
+  dygraphs::dySeries("Fair_Prediction", label = "Prediction") %>%
+  dygraphs::dySeries("Actual_Vote_Share", label = "Actual Vote") %>%
+  # dyGroup(c("Fair_Prediction", "Actual_Vote_Share"), drawPoints = TRUE) %>% 
+  dygraphs::dyOptions(stackedGraph = FALSE) %>%
+  dygraphs::dyRangeSelector(height = 10) %>% 
+  dygraphs::dyAxis("x", drawGrid = FALSE) %>% 
+  dygraphs::dyLegend(width = 500) %>% 
+  dygraphs::dyEvent("1964", "LBJ", labelLoc = "bottom") %>%
+  dygraphs::dyEvent("1992", "Ross Perot", labelLoc = "bottom")
+```
+
+---
+class:middle, center
+
+## Full Model (1/3)
+
+$V_t = \alpha_1 + \alpha_2 G_t + \alpha_3 P_t + \alpha_4 Z_t + \alpha_5 {DPER_t} + \alpha_6 {DUR_t} +\alpha_7 I_t + \alpha_8 {WAR_t} + \mu_t$
+
+---
+
+```{r echo=FALSE, cache=TRUE, fig.align="center"}
+library(sjPlot)
+#summary(full_model)
+sjt.lm(full_model,
+       show.ci = FALSE,
+       show.fstat = TRUE,
+       show.se = TRUE,
+       show.est = TRUE
+       )
+```
+
+---
+class: middle, center
+
+## Interaction Model (2/3)
+
+$V_t = \alpha_1 + \alpha_2 G_t * I_t + \alpha_3 P_t * I_t + \alpha_4 Z_t * I_t + \alpha_5 {DPER_t} + \alpha_6 {DUR_t} +\alpha_7 I_t + \alpha_8 {WAR_t} + \mu_t$
+
+---
+
+```{r echo=FALSE, cache=TRUE, fig.align="center"}
+#summary(interaction_model)
+sjt.lm(interaction_model,
+       show.ci = FALSE,
+       show.fstat = TRUE,
+       show.se = TRUE,
+       show.est = TRUE
+       )
+```
+
+---
+class: middle, center
+
+## Removing Redundancy (3/3)
+
+$V_t = \alpha_1 + \alpha_2 G_t * I_t + \alpha_3 P_t * I_t + \alpha_4 Z_t * I_t + \alpha_5 {DPER_t} + \alpha_6 {DUR_t} +\alpha_7 I_t + \alpha_8 {WAR_t} + \mu_t$
+
+---
+
+```{r echo=FALSE, cache=TRUE, fig.align="center"}
+#summary(model_Fair)
+sjt.lm(model_Fair,
+       show.ci = FALSE,
+       show.fstat = TRUE,
+       show.se = TRUE,
+       show.est = TRUE
+       )
+```
+
+---
+# Multicollinearity
+
+$$VIF_k = \frac{1}{1 - R^2_k}$$
+
+```{r VIF, message=FALSE, warning=FALSE, echo=FALSE, cache=TRUE}
+tab <- broom::tidy(vif(model_Fair))
+kable(tab, 
+    format = "latex",
+    booktabs = T,
+    align = "c",
+    digits = 2,
+    col.names=c("regressor","VIF")) %>% 
+  kableExtra::kable_styling(font_size = 8)  %>% 
+  kable_as_image("VIF_Table")
+```
+---
+# Heteroskedasticity
+
+$$\chi^2 = n\times R^2 \sim \chi^2_{(N-1)}$$
+```{r echo=FALSE, cache=TRUE}
+kable(tidy(bptest(model_Fair)),
+    format = "latex",
+    booktabs = T,
+    align = "c",
+    digits = 3
+    )  %>% 
+  kableExtra::kable_styling(font_size = 8) %>% 
+  kable_as_image("Heterosk_Table")
+```
+---
+# Autocorrelation
+
+$$d = \frac{\sum_{t=2}^{T}(e_t-e_{t-1})^2}{\sum_{t=1}^{T}e^2_t}$$
+```{r DurbinWatson, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+DW <- dwtest(model_Fair)
+kable(tidy(DW),
+    format = "latex",
+    booktabs = T,
+    align = "c",
+    digits = 3
+    )  %>% 
+  kableExtra::kable_styling(font_size = 8) %>% 
+  kable_as_image("Autocorr_Table")
+
+```
+---
+# Forecasts
+
+```{r echo=FALSE, cache=TRUE}
+Fair2014Forecast <- read_excel("data.xlsx", sheet = "Fair2014Forecast")
+kable(Fair2014Forecast,
+    format = "latex",
+    booktabs = T,
+    digits = 2
+    )  %>% 
+  footnote(general = "2016 Forecast") %>% 
+  kable_styling("striped", font_size = 8)  %>% 
+  kable_as_image("2016_Forecast")
+
+Forecast2020 <- read_excel("data.xlsx", sheet = "Forecast")
+kable(Forecast2020,
+    format = "latex",
+    booktabs = T,
+    digits = 2
+    )  %>% 
+  footnote(general = "2020 Forecast") %>% 
+  kable_styling("striped", font_size = 8)  %>% 
+  kable_as_image("2020_Forecase")
+```
+---
+class: center, middle
+
+# What's Next?
+
+
