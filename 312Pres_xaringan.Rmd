@@ -93,7 +93,7 @@ class: incremental
 ---
 # Ray Fair
 
-- Probably wrote own of your textbooks (Case, Fair, Oster)
+- Probably wrote one of your textbooks (Case, Fair, Oster)
 
 - Derived first model in Fair (1978)
 
